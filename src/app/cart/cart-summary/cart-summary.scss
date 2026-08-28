@@ -1,0 +1,48 @@
+.summary-panel {
+	width: 280px;
+	padding: 16px;
+	box-sizing: border-box;
+	background: var(--mat-sys-surface-container);
+	color: var(--mat-sys-on-surface);
+	border: 1px solid var(--mat-sys-outline-variant);
+	border-radius: 8px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.summary-panel h2,
+.empty-summary {
+	margin: 0;
+}
+
+.summary-panel h2 {
+	font-size: 1rem;
+	margin-bottom: 12px;
+}
+
+.summary-items {
+	display: grid;
+	gap: 12px;
+}
+
+.summary-item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 4px 12px;
+	font-size: 0.875rem;
+}
+
+.summary-item .item-name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.summary-item strong {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	align-self: center;
+}
+
+.summary-item span:nth-child(2) {
+	color: var(--mat-sys-on-surface-variant);
+}

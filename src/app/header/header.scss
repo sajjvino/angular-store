@@ -1,0 +1,46 @@
+.spacer{
+    flex: 1 1 auto;
+}
+
+.cart-menu {
+    position: relative;
+}
+
+.cart-menu app-cart-summary {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+    padding-top: 8px;
+    z-index: 10;
+}
+
+.cart-menu:hover app-cart-summary,
+.cart-menu:focus-within app-cart-summary {
+    display: block;
+}
+
+.cart-menu.cart-page-active:hover app-cart-summary,
+.cart-menu.cart-page-active:focus-within app-cart-summary {
+    display: none;
+}
+
+.main-header{
+    background-color: #3f51b5;
+    color: white;
+    padding: 0 6px;
+    position: relative;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    z-index: 9;
+
+    .branding{
+        display : flex;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin : auot 0;
+        line-height: 64px;
+        padding: 0 64px 1 8px;
+    }
+}
+

@@ -1,0 +1,59 @@
+<main class="cart-page">
+	<header class="cart-header">
+		<h1>Your Cart</h1>
+		<span>{{ totalItems() }} items</span>
+	</header>
+
+	@if (cartItems().length > 0) {
+		<div class="cart-layout">
+			<section class="cart-items" aria-label="Cart items">
+				@for (item of cartItems(); track item.product.id) {
+					<mat-card class="cart-item">
+						<mat-card-content>
+							<div class="item-details">
+								<h2>{{ item.product.name }}</h2>
+								<p>{{ item.product.description }}</p>
+								<strong>{{ item.product.price | currency }}</strong>
+							</div>
+
+							<div class="item-actions">
+								<div class="quantity-controls" aria-label="Quantity controls">
+									<button mat-icon-button type="button" (click)="decreaseQuantity(item.product.id)" aria-label="Decrease quantity">
+										<mat-icon>remove</mat-icon>
+									</button>
+									<span>{{ item.quantity }}</span>
+									<button mat-icon-button type="button" (click)="increaseQuantity(item.product.id)" aria-label="Increase quantity">
+										<mat-icon>add</mat-icon>
+									</button>
+								</div>
+								<button mat-button type="button" (click)="removeFromCart(item.product.id)">Remove</button>
+							</div>
+						</mat-card-content>
+					</mat-card>
+				}
+			</section>
+
+			<mat-card class="order-summary">
+				<mat-card-header>
+					<mat-card-title>Order Summary</mat-card-title>
+				</mat-card-header>
+				<mat-card-content>
+					<div><span>Subtotal</span><span>{{ subtotal() | currency }}</span></div>
+					<div><span>Discount</span><span>-{{ discount() | currency }}</span></div>
+					<div><span>Tax</span><span>{{ tax() | currency }}</span></div>
+					<mat-divider></mat-divider>
+					<div class="total-row"><strong>Total</strong><strong>{{ total() | currency }}</strong></div>
+				</mat-card-content>
+				<mat-card-actions>
+					<button mat-flat-button color="primary" type="button" (click)="proceedToCheckout()">Proceed to Checkout</button>
+				</mat-card-actions>
+			</mat-card>
+		</div>
+	} @else {
+		<section class="empty-cart">
+			<mat-icon>shopping_cart</mat-icon>
+			<h2>Your cart is empty</h2>
+			<p>Add products to see them here.</p>
+		</section>
+	}
+</main>

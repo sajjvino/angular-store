@@ -1,0 +1,17 @@
+<section class="summary-panel" aria-label="Cart summary">
+	<h2>Cart Summary</h2>
+
+	@if (cartItems().length > 0) {
+		<div class="summary-items">
+			@for (item of cartItems(); track item.product.id) {
+				<div class="summary-item">
+					<span class="item-name">{{ item.product.name }}</span>
+					<span>{{ item.quantity }} x {{ item.product.price | currency }}</span>
+					<strong>{{ item.product.price * item.quantity | currency }}</strong>
+				</div>
+			}
+		</div>
+	} @else {
+		<p class="empty-summary">Your cart is empty.</p>
+	}
+</section>

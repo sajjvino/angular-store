@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -14,6 +15,7 @@ import { CartService } from '../cart-service';
 })
 export class CartDisplay {
   private readonly cartService = inject(CartService);
+  private readonly router = inject(Router);
 
   protected readonly cartItems = this.cartService.cartItems;
   protected readonly totalItems = this.cartService.totalItems;
@@ -41,6 +43,6 @@ export class CartDisplay {
   }
 
   protected proceedToCheckout(): void {
-    window.alert('Checkout is not available yet.');
+    this.router.navigate(['/checkout']);
   }
 }

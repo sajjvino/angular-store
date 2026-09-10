@@ -1,0 +1,205 @@
+<main class="checkout-page">
+  <header class="checkout-header">
+    <h1>Checkout</h1>
+    <p>Complete your purchase</p>
+  </header>
+
+  @if (cartItems().length > 0) {
+    <div class="checkout-layout">
+      <!-- Order Summary Section -->
+      <mat-card class="order-summary">
+        <mat-card-header>
+          <mat-card-title>Order Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="items-list">
+            @for (item of cartItems(); track item.product.id) {
+              <div class="summary-item">
+                <div class="item-info">
+                  <strong>{{ item.product.name }}</strong>
+                  <span class="item-qty">Qty: {{ item.quantity }}</span>
+                </div>
+                <span class="item-price">{{ item.product.price * item.quantity | currency }}</span>
+              </div>
+            }
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>{{ subtotal() | currency }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Discount</span>
+              <span class="discount">-{{ discount() | currency }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (10%)</span>
+              <span>{{ tax() | currency }}</span>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="total-row">
+            <strong>Total Amount</strong>
+            <strong class="total-amount">{{ total() | currency }}</strong>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Customer Details Form Section -->
+      <mat-card class="customer-form-card">
+        <mat-card-header>
+          <mat-card-title>Guest Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="customerForm">
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" type="text" />
+                @if (getFieldError('firstName')) {
+                  <mat-error>{{ getFieldError('firstName') }}</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" type="text" />
+                @if (getFieldError('lastName')) {
+                  <mat-error>{{ getFieldError('lastName') }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email" />
+                @if (getFieldError('email')) {
+                  <mat-error>{{ getFieldError('email') }}</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>Phone Number</mat-label>
+                <input matInput formControlName="phone" type="tel" placeholder="1234567890" />
+                @if (getFieldError('phone')) {
+                  <mat-error>{{ getFieldError('phone') }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <mat-form-field class="form-field full-width">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" type="text" />
+              @if (getFieldError('address')) {
+                <mat-error>{{ getFieldError('address') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" type="text" />
+                @if (getFieldError('city')) {
+                  <mat-error>{{ getFieldError('city') }}</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>Zip Code</mat-label>
+                <input matInput formControlName="zipCode" type="text" placeholder="12345" />
+                @if (getFieldError('zipCode')) {
+                  <mat-error>{{ getFieldError('zipCode') }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Payment Options Section -->
+      <mat-card class="payment-card">
+        <mat-card-header>
+          <mat-card-title>Payment Method</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="payment-options">
+            <mat-radio-group [value]="paymentMethod()" (change)="onPaymentMethodChange($event.value)">
+              <div class="payment-option">
+                <mat-radio-button value="creditCard">
+                  <mat-icon>credit_card</mat-icon>
+                  <span>Credit Card</span>
+                </mat-radio-button>
+              </div>
+
+              <div class="payment-option">
+                <mat-radio-button value="debitCard">
+                  <mat-icon>credit_card</mat-icon>
+                  <span>Debit Card</span>
+                </mat-radio-button>
+              </div>
+
+              <div class="payment-option">
+                <mat-radio-button value="paypal">
+                  <mat-icon>account_balance_wallet</mat-icon>
+                  <span>PayPal</span>
+                </mat-radio-button>
+              </div>
+
+              <div class="payment-option">
+                <mat-radio-button value="applePay">
+                  <mat-icon>phone_iphone</mat-icon>
+                  <span>Apple Pay</span>
+                </mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          @if (paymentMethod() === 'creditCard' || paymentMethod() === 'debitCard') {
+            <div class="card-details">
+              <p class="info-text">Card details would be entered here in a production app.</p>
+            </div>
+          } @else if (paymentMethod() === 'paypal') {
+            <div class="payment-details">
+              <p class="info-text">You will be redirected to PayPal to complete your payment.</p>
+            </div>
+          } @else if (paymentMethod() === 'applePay') {
+            <div class="payment-details">
+              <p class="info-text">Apple Pay will be processed on your device.</p>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-stroked-button type="button" (click)="continueShopping()" class="continue-btn">
+          Continue Shopping
+        </button>
+        <button 
+          mat-flat-button 
+          color="primary" 
+          type="button" 
+          (click)="placeOrder()"
+          [disabled]="!customerForm.valid || cartItems().length === 0"
+          class="place-order-btn">
+          Place Order
+        </button>
+      </div>
+    </div>
+  } @else {
+    <section class="empty-checkout">
+      <mat-icon>shopping_cart</mat-icon>
+      <h2>Your cart is empty</h2>
+      <p>Add products to proceed with checkout.</p>
+      <button mat-flat-button color="primary" (click)="continueShopping()">
+        Continue Shopping
+      </button>
+    </section>
+  }
+</main>

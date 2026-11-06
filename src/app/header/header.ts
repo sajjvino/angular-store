@@ -16,7 +16,7 @@ import { CartSummary } from '../cart/cart-summary/cart-summary';
 export class Header {
 
 protected cartService = inject(CartService);
-
+//Adding a comment
 
 
 }

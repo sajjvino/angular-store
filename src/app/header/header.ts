@@ -17,6 +17,6 @@ export class Header {
 
 protected cartService = inject(CartService);
 //Adding a comment
-
+//Added a comment after creating feature 3 branch
 
 }
